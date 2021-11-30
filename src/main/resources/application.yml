@@ -1,0 +1,11 @@
+spring:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+  r2dbc:
+    # will be overridden by environment variables
+    url: r2dbc:postgresql://localhost:5432/livequiz
+    username: user
+    password: password
+

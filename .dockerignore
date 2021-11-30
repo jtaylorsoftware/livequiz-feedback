@@ -1,0 +1,7 @@
+build
+.idea/docker-compose.yml
+.circleci
+.idea
+.gitignore
+/Dockerfile
+/docker-compose.test.yml
