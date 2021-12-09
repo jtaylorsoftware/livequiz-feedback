@@ -4,6 +4,7 @@ import com.jtaylorsoftware.livequiz.api.feedback.model.DifficultyRating
 import com.jtaylorsoftware.livequiz.api.feedback.model.Feedback
 import com.jtaylorsoftware.livequiz.api.feedback.repository.FeedbackRepository
 import com.jtaylorsoftware.livequiz.api.feedback.service.result.ServiceResult
+import com.jtaylorsoftware.livequiz.api.feedback.service.result.collectToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
@@ -141,10 +142,4 @@ class FeedbackServiceTests @Autowired constructor(
     private fun randomInt() = Random.nextInt(0, numFeedback)
     private fun randomDifficultyRating() =
         Random.nextInt(DifficultyRating.EASY.value, DifficultyRating.IMPOSSIBLE.value)
-
-    private suspend fun <T> ServiceResult<Flow<T>>.collectToList(): List<T> {
-        val list = mutableListOf<T>()
-        this.result.getOrNull()!!.toList(list)
-        return list
-    }
 }
