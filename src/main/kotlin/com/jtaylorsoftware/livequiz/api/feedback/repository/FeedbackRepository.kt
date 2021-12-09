@@ -40,7 +40,7 @@ interface FeedbackRepository : CoroutineCrudRepository<Feedback, Int> {
      */
     @Query(
         """
-        SELECT  CAST(SUM(feedback.difficulty_rating) AS DECIMAL) / GREATEST(1, COUNT(*))
+        SELECT  CAST(COALESCE(SUM(feedback.difficulty_rating), 0) AS DECIMAL) / GREATEST(1, COUNT(*))
         FROM    feedback
         WHERE   feedback.quiz_id = :quizId
     """
@@ -52,7 +52,7 @@ interface FeedbackRepository : CoroutineCrudRepository<Feedback, Int> {
      */
     @Query(
         """
-        SELECT  CAST(SUM(feedback.difficulty_rating) AS DECIMAL) / GREATEST(1, COUNT(*))
+        SELECT  CAST(COALESCE(SUM(feedback.difficulty_rating), 0) AS DECIMAL) / GREATEST(1, COUNT(*))
         FROM    feedback
         WHERE   feedback.quiz_id = :quizId AND feedback.question_number = :questionNumber
     """

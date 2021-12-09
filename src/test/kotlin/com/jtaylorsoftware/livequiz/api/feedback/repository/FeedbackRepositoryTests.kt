@@ -48,12 +48,29 @@ class FeedbackRepositoryTests {
     }
 
     @Test
+    fun `getAverageDifficultyRating with no matches should return 0`() = runBlocking {
+        val average = feedbackRepository.getAverageDifficultyRating("invalid-quizId")
+        val expected = 0f
+
+        assertThat(average, `is`(expected))
+    }
+
+    @Test
     fun `getAverageDifficultyRatingForQuestionNumber should calculate the correct average`() = runBlocking {
         val questionNumber = feedback[Random.nextInt(0, 100)].questionNumber
         val average = feedbackRepository.getAverageDifficultyRatingForQuestionNumber(quizId, questionNumber)
         val expected = feedback.fold(0f) { acc, feedback ->
             acc + if (feedback.questionNumber == questionNumber) feedback.difficultyRating.toFloat() else 0f
         } / feedback.count { it.questionNumber == questionNumber }
+
+        assertThat(average, `is`(expected))
+    }
+
+    @Test
+    fun `getAverageDifficultyRatingForQuestionNumber with no matches should return 0`() = runBlocking {
+        val questionNumber = 100_000
+        val average = feedbackRepository.getAverageDifficultyRatingForQuestionNumber(quizId, questionNumber)
+        val expected = 0f
 
         assertThat(average, `is`(expected))
     }
