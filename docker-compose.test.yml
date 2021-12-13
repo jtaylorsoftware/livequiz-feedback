@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  spring-test:
+    build:
+      context: .
+      target: test
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/livequiz
+      - SPRING_R2DBC_USERNAME=user
+      - SPRING_R2DBC_PASSWORD=password
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=livequiz
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
